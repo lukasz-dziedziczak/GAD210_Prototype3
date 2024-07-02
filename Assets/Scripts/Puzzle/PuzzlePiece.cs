@@ -25,6 +25,8 @@ public class PuzzlePiece : MonoBehaviour
         rb.constraints = RigidbodyConstraints.FreezeAll;
         _collider.isTrigger = true;
 
+        if (audioSource.isPlaying) audioSource.Stop();
+
         Debug.Log("Picked up " + name);
     }
 

@@ -12,6 +12,8 @@ public class Door : MonoBehaviour
     float timeSinceStart => Time.time - changeStartTime;
     EState state;
 
+    public EState State => state;
+
     public enum EState
     {
         Closed,
