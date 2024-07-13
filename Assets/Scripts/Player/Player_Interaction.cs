@@ -9,34 +9,35 @@ public class Player_Interaction : MonoBehaviour
     [SerializeField] LayerMask interactableLayers;
     [SerializeField] float holdingDistance;
 
-    Puzzle1Piece puzzlePiece;
-    Puzzle1PieceSlot puzzlePieceSlot;
+    public Puzzle1Piece Puzzle1Piece { get; private set; }
+    public Puzzle1PieceSlot Puzzle1PieceSlot { get; private set; }
+    public Puzzle2Piece Puzzle2Piece { get; private set; }
 
-    bool holdingPuzzlePiece;
-    public bool CanPickUp => puzzlePiece != null;
-    public bool CanPlay => puzzlePiece != null || puzzlePieceSlot != null;
+    public bool HoldingPuzzlePiece { get; private set; }    
+    public bool CanPickUp => Puzzle1Piece != null;
+    public bool CanPlay => Puzzle1Piece != null || Puzzle1PieceSlot != null;
 
     private void Awake()
     {
         if (player == null) player = GetComponent<Player>();
 
-        player.Input.OnPickupPress += OnPickupPress;
-        player.Input.OnPickupRelease += OnPickupRelease;
-        player.Input.OnPlaySoundPress += OnPlaySoundPress;
+        player.Input.OnLeftPress += OnLeftPress;
+        player.Input.OnLeftRelease += OnLeftRelease;
+        player.Input.OnRightPress += OnRightPress;
     }
 
     private void OnDisable()
     {
-        player.Input.OnPickupPress -= OnPickupPress;
-        player.Input.OnPickupRelease -= OnPickupRelease;
-        player.Input.OnPlaySoundPress -= OnPlaySoundPress;
+        player.Input.OnLeftPress -= OnLeftPress;
+        player.Input.OnLeftRelease -= OnLeftRelease;
+        player.Input.OnRightPress -= OnRightPress;
     }
 
     private void Update()
     {
-        if (holdingPuzzlePiece)
+        if (HoldingPuzzlePiece)
         {
-            puzzlePiece.transform.position = holdingPosition;
+            Puzzle1Piece.transform.position = holdingPosition;
         }
 
         else
@@ -44,14 +45,19 @@ public class Player_Interaction : MonoBehaviour
             Ray ray = player.Camera.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
             if (Physics.Raycast(ray, out RaycastHit hit, reachLength, interactableLayers))
             {
-                if (hit.collider.TryGetComponent<Puzzle1Piece>(out Puzzle1Piece piece))
+                if (hit.collider.TryGetComponent<Puzzle1Piece>(out Puzzle1Piece piece1))
                 {
-                    puzzlePiece = piece;
+                    Puzzle1Piece = piece1;
                 }
 
                 else if (hit.collider.TryGetComponent<Puzzle1PieceSlot>(out Puzzle1PieceSlot slot))
                 {
-                    puzzlePieceSlot = slot;
+                    Puzzle1PieceSlot = slot;
+                }
+
+                else if (hit.collider.TryGetComponent<Puzzle2Piece>(out Puzzle2Piece piece2))
+                {
+                    Puzzle2Piece = piece2;
                 }
             }
             else
@@ -63,18 +69,23 @@ public class Player_Interaction : MonoBehaviour
 
     public void ClearInteractables()
     {
-        puzzlePiece = null;
-        puzzlePieceSlot = null;
-        holdingPuzzlePiece = false;
+        Puzzle1Piece = null;
+        Puzzle1PieceSlot = null;
+        HoldingPuzzlePiece = false;
+        Puzzle2Piece = null;
     }
 
 
-    private void OnPickupPress()
+    private void OnLeftPress()
     {
-        if (puzzlePiece != null)
+        if (Puzzle1Piece != null)
         {
-            holdingPuzzlePiece = true;
-            puzzlePiece.PickUp();
+            HoldingPuzzlePiece = true;
+            Puzzle1Piece.PickUp();
+        }
+        else if (Puzzle2Piece != null)
+        {
+            Puzzle2Piece.Interaction();
         }
         else
         {
@@ -83,27 +94,27 @@ public class Player_Interaction : MonoBehaviour
 
     }
 
-    private void OnPickupRelease()
+    private void OnLeftRelease()
     {
-        if (holdingPuzzlePiece)
+        if (HoldingPuzzlePiece)
         {
-            holdingPuzzlePiece = false;
-            puzzlePiece.Drop();
+            HoldingPuzzlePiece = false;
+            Puzzle1Piece.Drop();
         }
     }
 
-    private void OnPlaySoundPress()
+    private void OnRightPress()
     {
-        if (puzzlePiece != null && puzzlePiece.InSlot)
+        if (Puzzle1Piece != null && Puzzle1Piece.InSlot)
         {
             //Debug.Log("Trying to play sound on piece");
-            puzzlePiece.PlaySound();
+            Puzzle1Piece.PlaySound();
         }
 
-        else if (puzzlePieceSlot != null && puzzlePieceSlot.SlotOccupied)
+        else if (Puzzle1PieceSlot != null && Puzzle1PieceSlot.SlotOccupied)
         {
             //Debug.Log("Trying to play sound on slot");
-            puzzlePieceSlot.PuzzlePieceInSlot.PlaySound();
+            Puzzle1PieceSlot.PuzzlePieceInSlot.PlaySound();
         }
 
         else

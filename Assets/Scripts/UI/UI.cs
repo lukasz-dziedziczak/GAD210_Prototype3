@@ -18,6 +18,7 @@ public class UI : MonoBehaviour
 
     private void Start()
     {
+        PauseMenu.gameObject.SetActive(false);
         Player.Instance.Input.OnPausePress += OnPausePress;
     }
 
@@ -43,4 +44,6 @@ public class UI : MonoBehaviour
             PauseMenu.gameObject.SetActive(false);
         }
     }
+
+    public static bool MenuOpen => Instance.PauseMenu.gameObject.activeSelf;
 }

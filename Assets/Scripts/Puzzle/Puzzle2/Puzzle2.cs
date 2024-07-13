@@ -9,6 +9,24 @@ public class Puzzle2 : Puzzle
     [SerializeField] Door door;
 
     int currentIndex = -1;
+    int lastIndex;
+
+    private void Start()
+    {
+        SetLastIndex();
+    }
+
+    private void SetLastIndex()
+    {
+        int last = 0;
+
+        foreach (Puzzle2Piece piece in puzzlePieces)
+        {
+            if (piece.Index > last) last = piece.Index;
+        }
+
+        lastIndex = last;
+    }
 
     public void ResetPuzzle()
     {
@@ -23,7 +41,11 @@ public class Puzzle2 : Puzzle
         {
             PuzzlePieceByIndex(currentIndex).StopSound();
             currentIndex++;
-            PuzzlePieceByIndex(currentIndex).PlaySound();
+            if (currentIndex > lastIndex)
+            {
+                door.ToggleDoor();
+            }
+            else PuzzlePieceByIndex(currentIndex).PlaySound();
         }
     }
 
@@ -40,4 +62,6 @@ public class Puzzle2 : Puzzle
     {
         ResetPuzzle();
     }
+
+    
 }

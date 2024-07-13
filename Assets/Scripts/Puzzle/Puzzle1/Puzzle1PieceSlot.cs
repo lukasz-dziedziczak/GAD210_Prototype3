@@ -30,6 +30,7 @@ public class Puzzle1PieceSlot : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        print(name + " has " + other.name + " in slot area");
         if (PuzzlePieceInSlot != null) return;
 
         if (other.TryGetComponent<Puzzle1Piece>(out Puzzle1Piece puzzlePiece))

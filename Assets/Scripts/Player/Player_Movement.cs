@@ -22,7 +22,7 @@ public class Player_Movement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //if (UI.ShowingMainMenu) return;
+        if (UI.MenuOpen) return;
 
         if (player.Input.Movement.magnitude > 0)
         {

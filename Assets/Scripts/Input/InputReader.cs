@@ -8,9 +8,9 @@ public class InputReader : MonoBehaviour, Controls.IPlayerActions
 
     [field: SerializeField] public Vector2 Movement { get; private set; }
     [field: SerializeField] public Vector2 Look { get; private set; }
-    public event Action OnPickupPress;
-    public event Action OnPickupRelease;
-    public event Action OnPlaySoundPress;
+    public event Action OnLeftPress;
+    public event Action OnLeftRelease;
+    public event Action OnRightPress;
     public event Action OnPausePress;
 
     private void Awake()
@@ -25,17 +25,6 @@ public class InputReader : MonoBehaviour, Controls.IPlayerActions
         Movement = context.ReadValue<Vector2>();
     }
 
-    public void OnPickup(InputAction.CallbackContext context)
-    {
-        if (context.performed) OnPickupPress?.Invoke();
-        else if (context.canceled) OnPickupRelease?.Invoke();
-    }
-
-    public void OnPlaySound(InputAction.CallbackContext context)
-    {
-        if (context.performed) OnPlaySoundPress?.Invoke();
-    }
-
     public void OnLook(InputAction.CallbackContext context)
     {
         Look = context.ReadValue<Vector2>();
@@ -44,5 +33,16 @@ public class InputReader : MonoBehaviour, Controls.IPlayerActions
     public void OnPause(InputAction.CallbackContext context)
     {
         if (context.performed) OnPausePress?.Invoke();
+    }
+
+    public void OnLeft(InputAction.CallbackContext context)
+    {
+        if (context.performed) OnLeftPress?.Invoke();
+        else if (context.canceled) OnLeftRelease?.Invoke();
+    }
+
+    public void OnRight(InputAction.CallbackContext context)
+    {
+        if (context.performed) OnRightPress?.Invoke();
     }
 }

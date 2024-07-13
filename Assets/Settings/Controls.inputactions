@@ -24,7 +24,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Pickup",
+                    "name": "Left",
                     "type": "Button",
                     "id": "133c372f-1ef7-4907-8b1b-19c65b3ad26f",
                     "expectedControlType": "Button",
@@ -33,7 +33,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "PlaySound",
+                    "name": "Right",
                     "type": "Button",
                     "id": "a641a35b-b0ca-4c7f-8071-faae8099afd7",
                     "expectedControlType": "Button",
@@ -114,7 +114,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Pickup",
+                    "action": "Left",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -125,7 +125,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "PlaySound",
+                    "action": "Right",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

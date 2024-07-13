@@ -7,6 +7,7 @@ public class Door : MonoBehaviour
     [SerializeField] float closedPosition;
     [SerializeField] float openPosition;
     [SerializeField] float changeTime;
+    [SerializeField] AudioSource audioSource;
 
     float changeStartTime;
     float timeSinceStart => Time.time - changeStartTime;
@@ -65,6 +66,11 @@ public class Door : MonoBehaviour
         {
             changeStartTime = Time.time;
             state = EState.Opening;
+        }
+
+        if (audioSource != null && audioSource.clip != null)
+        {
+            audioSource.Play();
         }
     }
 }

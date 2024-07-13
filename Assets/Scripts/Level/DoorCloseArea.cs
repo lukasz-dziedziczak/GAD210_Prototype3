@@ -5,7 +5,7 @@ using UnityEngine;
 public class DoorCloseArea : MonoBehaviour
 {
     [SerializeField] Door door;
-    [SerializeField] 
+    [SerializeField] Puzzle nextPuzzle;
 
     private void CloseDoor()
     {
@@ -19,6 +19,7 @@ public class DoorCloseArea : MonoBehaviour
         if (other.TryGetComponent<Player>(out Player player))
         {
             CloseDoor();
+            nextPuzzle?.BeginPuzzle();
         }
     }
 }
