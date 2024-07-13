@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -26,6 +27,13 @@ public class Puzzle1PieceSlot : MonoBehaviour
     private void Awake()
     {
         if (puzzle == null) puzzle = GetComponentInParent<Puzzle1>();
+
+        Player.Instance.Input.OnLeftRelease += Input_OnLeftRelease;
+    }
+
+    private void Input_OnLeftRelease()
+    {
+        if (RemovingPiece != null) RemovingPiece = null;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -48,7 +56,7 @@ public class Puzzle1PieceSlot : MonoBehaviour
         if (other.TryGetComponent<Puzzle1Piece>(out Puzzle1Piece puzzlePiece) &&
             puzzlePiece == RemovingPiece)
         {
-            RemovingPiece = null;
+            //RemovingPiece = null;
         }
     }
 
