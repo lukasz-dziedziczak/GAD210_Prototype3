@@ -11,6 +11,7 @@ public class InputReader : MonoBehaviour, Controls.IPlayerActions
     public event Action OnPickupPress;
     public event Action OnPickupRelease;
     public event Action OnPlaySoundPress;
+    public event Action OnPausePress;
 
     private void Awake()
     {
@@ -38,5 +39,10 @@ public class InputReader : MonoBehaviour, Controls.IPlayerActions
     public void OnLook(InputAction.CallbackContext context)
     {
         Look = context.ReadValue<Vector2>();
+    }
+
+    public void OnPause(InputAction.CallbackContext context)
+    {
+        if (context.performed) OnPausePress?.Invoke();
     }
 }

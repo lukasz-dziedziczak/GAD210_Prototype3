@@ -5,6 +5,7 @@ using UnityEngine;
 public class DoorCloseArea : MonoBehaviour
 {
     [SerializeField] Door door;
+    [SerializeField] 
 
     private void CloseDoor()
     {

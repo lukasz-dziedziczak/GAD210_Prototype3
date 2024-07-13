@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class PuzzlePieceSlot : MonoBehaviour
+public class Puzzle1PieceSlot : MonoBehaviour
 {
     [SerializeField] Vector3 puzzlePiecePosition;
-    [SerializeField] Puzzle puzzle;
+    [SerializeField] Puzzle1 puzzle;
 
     public Vector3 PuzzlePiecePosition => puzzlePiecePosition;
-    public PuzzlePiece PuzzlePieceInSlot;
-    public PuzzlePiece RemovingPiece;
+    public Puzzle1Piece PuzzlePieceInSlot;
+    public Puzzle1Piece RemovingPiece;
     public bool SlotOccupied => PuzzlePieceInSlot != null;
-    public Puzzle Puzzle => puzzle;
+    public Puzzle1 Puzzle => puzzle;
     public AudioSource AudioSource
     {
         get
@@ -25,14 +25,14 @@ public class PuzzlePieceSlot : MonoBehaviour
 
     private void Awake()
     {
-        if (puzzle == null) puzzle = GetComponentInParent<Puzzle>();
+        if (puzzle == null) puzzle = GetComponentInParent<Puzzle1>();
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (PuzzlePieceInSlot != null) return;
 
-        if (other.TryGetComponent<PuzzlePiece>(out PuzzlePiece puzzlePiece))
+        if (other.TryGetComponent<Puzzle1Piece>(out Puzzle1Piece puzzlePiece))
         {
             if (puzzlePiece == RemovingPiece) return;
 
@@ -44,7 +44,7 @@ public class PuzzlePieceSlot : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.TryGetComponent<PuzzlePiece>(out PuzzlePiece puzzlePiece) &&
+        if (other.TryGetComponent<Puzzle1Piece>(out Puzzle1Piece puzzlePiece) &&
             puzzlePiece == RemovingPiece)
         {
             RemovingPiece = null;

@@ -9,8 +9,8 @@ public class Player_Interaction : MonoBehaviour
     [SerializeField] LayerMask interactableLayers;
     [SerializeField] float holdingDistance;
 
-    PuzzlePiece puzzlePiece;
-    PuzzlePieceSlot puzzlePieceSlot;
+    Puzzle1Piece puzzlePiece;
+    Puzzle1PieceSlot puzzlePieceSlot;
 
     bool holdingPuzzlePiece;
     public bool CanPickUp => puzzlePiece != null;
@@ -44,12 +44,12 @@ public class Player_Interaction : MonoBehaviour
             Ray ray = player.Camera.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
             if (Physics.Raycast(ray, out RaycastHit hit, reachLength, interactableLayers))
             {
-                if (hit.collider.TryGetComponent<PuzzlePiece>(out PuzzlePiece piece))
+                if (hit.collider.TryGetComponent<Puzzle1Piece>(out Puzzle1Piece piece))
                 {
                     puzzlePiece = piece;
                 }
 
-                else if (hit.collider.TryGetComponent<PuzzlePieceSlot>(out PuzzlePieceSlot slot))
+                else if (hit.collider.TryGetComponent<Puzzle1PieceSlot>(out Puzzle1PieceSlot slot))
                 {
                     puzzlePieceSlot = slot;
                 }

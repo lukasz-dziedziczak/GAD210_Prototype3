@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PuzzlePiece : MonoBehaviour
+public class Puzzle1Piece : MonoBehaviour
 {
     [SerializeField] AudioSource audioSource;
     [SerializeField] Rigidbody rb;
     [SerializeField] Collider _collider;
 
-    public PuzzlePieceSlot Slot;
+    public Puzzle1PieceSlot Slot;
     public AudioSource AudioSource => audioSource;
 
     public bool InSlot => Slot != null;
@@ -39,7 +39,7 @@ public class PuzzlePiece : MonoBehaviour
         Debug.Log("Dropped " + name);
     }
 
-    public void InsertIntoSlot(PuzzlePieceSlot newSlot)
+    public void InsertIntoSlot(Puzzle1PieceSlot newSlot)
     {
         Slot = newSlot;
 
